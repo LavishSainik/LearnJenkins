@@ -36,7 +36,7 @@ pipeline{
     stage("build image"){
       steps{
         echo "building the docker image"
-        withCredentails([userPassword(credentialsId:'docker-hub',passwordVariable:'PASS',usernameVariable:'USER')])
+        withCredentails([usernamePassword(credentialsId:'docker-hub',passwordVariable:'PASS',usernameVariable:'USER')])
         sh 'docker build -t lavish11/my-repo:2.0 .'
         sh "echo $PASS | docker login -u $USER --password-stdin"
         sh 'docker push lavish11/my-repo:2.0'
