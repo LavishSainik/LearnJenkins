@@ -39,7 +39,7 @@ pipeline{
           buildImage()
         }
       }
-    }
+    
 
     stage("deploy"){
       input{
