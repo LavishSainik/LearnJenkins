@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+@Library('Jenkins-shared-liberary')
 pipeline{
   agent any
   tools{
@@ -17,8 +19,7 @@ pipeline{
 
     stage("build jar"){
       steps{
-        echo "building the application..."
-        sh 'mvn package'
+          buildJar()
       }
     }
 
@@ -35,11 +36,7 @@ pipeline{
 
     stage("build image"){
       steps{
-        echo "building the docker image"
-        withCredentials([usernamePassword(credentialsId:'docker-hub',passwordVariable:'PASS',usernameVariable:'USER')]){
-        sh 'docker build -t lavish11/my-repo:2.0 .'
-        sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh 'docker push lavish11/my-repo:2.0'
+          buildImage()
         }
       }
     }
